@@ -1,19 +1,24 @@
 package com.guilherme;
 
-import com.guilherme.conexao.ConexaoMySQL;
-import java.sql.Connection;
+import com.guilherme.dao.NotaFiscalDAO;
+import com.guilherme.model.NotaFiscal;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Testando a conexão com o banco...");
+        System.out.println("Criando objeto da Nota Fiscal...");
 
-        // Usando a nossa ponte para tentar conectar
-        Connection conexao = ConexaoMySQL.conectar();
+        // 1. Criamos a caixinha com os dados da nota usando o construtor completo
+        NotaFiscal novaNota = new NotaFiscal(
+                "NF-9988",
+                "Autopeças do Zé",
+                "12345678000199",
+                LocalDate.now(),
+                1500.50
+        );
 
-        if (conexao != null) {
-            System.out.println("SUCESSO! O Java conectou com o MySQL perfeitamente!");
-        } else {
-            System.out.println("FALHA! Deu ruim na conexão.");
-        }
+        // 2. Chamamos o nosso operário (DAO) para fazer o INSERT no banco
+        NotaFiscalDAO dao = new NotaFiscalDAO();
+        dao.inserir(novaNota);
     }
 }
