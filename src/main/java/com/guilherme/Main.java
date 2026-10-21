@@ -1,24 +1,18 @@
 package com.guilherme;
 
-import com.guilherme.dao.NotaFiscalDAO;
-import com.guilherme.model.NotaFiscal;
-import java.time.LocalDate;
+import com.guilherme.dao.ItemNotaDAO;
+import com.guilherme.model.ItemNota;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Criando objeto da Nota Fiscal...");
+        System.out.println("Cadastrando item da nota fiscal...");
 
-        // 1. Criamos a caixinha com os dados da nota usando o construtor completo
-        NotaFiscal novaNota = new NotaFiscal(
-                "NF-9988",
-                "Autopeças do Zé",
-                "12345678000199",
-                LocalDate.now(),
-                1500.50
-        );
+        // Criamos o item já amarrando na nota de ID 1 (Autopeças do Zé)
+        // Parâmetros: (idNota, produto, quantidadeEsperada, quantidadeRecebida)
+        ItemNota novoItem = new ItemNota(1, "Retrovisor Astra 2000", 2, 2);
 
-        // 2. Chamamos o nosso operário (DAO) para fazer o INSERT no banco
-        NotaFiscalDAO dao = new NotaFiscalDAO();
-        dao.inserir(novaNota);
+        // Chamamos o operário (DAO) do item para fazer o INSERT no banco
+        ItemNotaDAO itemDao = new ItemNotaDAO();
+        itemDao.inserirItem(novoItem);
     }
 }
